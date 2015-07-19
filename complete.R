@@ -15,13 +15,18 @@ complete <- function(directory="specdata", id = 1:332) {
   
   # build the file list from the id string  
   c_files <- paste("./",directory,"/",sprintf("%03d",id),".csv",sep="")
+  # intialize the data frame
   c_cases = data.frame()
 
-  for(f in c_files) {
-    print(f)
-    nobs_data <- read.csv(f, header = TRUE)
-    #TODO
-    c_cases <- cbind(id,nobs = sum(complete.cases(nobs_data$sulfate)))
+  # loop through the files
+  for(i in 1:length(c_files)){
+    nobs_data <- read.csv(c_files[i], header = TRUE)
+    # build the frame
+    if(length(c_cases)==0){
+      c_cases <- cbind(id = id[i],nobs = sum(complete.cases(nobs_data)))    
+    } else {
+      c_cases <- rbind(c_cases, c(id[i],sum(complete.cases(nobs_data))))
+    }
   }
-  c_cases
+  c_cases  
 }
