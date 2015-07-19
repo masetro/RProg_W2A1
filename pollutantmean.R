@@ -19,8 +19,8 @@ pollutantmean <- function(directory="specdata", pollutant, id=1:332) {
 # loop through the monitor files; read the csv and caculate the mean
   for(f in m_files) {
     m_data <- read.csv(f, header = TRUE)
-    m_values <- c(m_values,mean(m_data[,pollutant],na.rm=TRUE))
+    m_values <- c(m_values, m_data[,pollutant])
   }
 # return the mean data
-  pollutantmean <- mean(m_values)
+  mean(m_values, na.rm = TRUE)
 }

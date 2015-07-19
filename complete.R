@@ -28,5 +28,5 @@ complete <- function(directory="specdata", id = 1:332) {
       c_cases <- rbind(c_cases, c(id[i],sum(complete.cases(nobs_data))))
     }
   }
-  c_cases  
+  as.data.frame(c_cases)
 }
