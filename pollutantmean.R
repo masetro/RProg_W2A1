@@ -9,20 +9,18 @@ pollutantmean <- function(directory="specdata", pollutant, id=1:332) {
   ## Return the mean of the pollutant across all monitors list
   ## in the 'id' vector (ignoring NA values)
   ## NOTE: Do not round the result!
-  
-  ##Loop through the provided monitor ids
-  ##Read the particulate data from the monitor into a vector and remove NA values
-  ##use the following: read.csv
-  
+
+# build the file list from the id string  
   m_files <- paste("./",directory,"/",sprintf("%03d",id),".csv",sep="")
-  m_sum <- 0
+
+# initialize the mean values vector
+  m_values <- vector()
   
+# loop through the monitor files; read the csv and caculate the mean
   for(f in m_files) {
     m_data <- read.csv(f, header = TRUE)
-    #pollutantmean <- cbind(mean(m_data[pollutant][!is.na(m_data[pollutant])]))
-
-    m_sum <- m_sum + mean(m_data[pollutant][!is.na(m_data[pollutant])])
-    
+    m_values <- c(m_values,mean(m_data[,pollutant],na.rm=TRUE))
   }
-  pollutantmean <- m_sum
+# return the mean data
+  pollutantmean <- mean(m_values)
 }
